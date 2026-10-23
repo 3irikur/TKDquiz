@@ -107,10 +107,10 @@ const VOCAB=[
 /* Spørsmål */
 const FACTS=[
  [1,"Hvor mange grunnprinsipper (tenets) har Taekwon-do?","5",["3","4","7"]],
- [1,"Du sier «vær så god» og «takk», og hilser pent på instruktøren. Hvilket grunnprinsipp er det?","Høflighet (Ye Ui 예의)",["Selvkontroll (Guk Gi 극기)","Iherdighet (In Nae 인내)","Ukuelig ånd (Baekjul Boolgool 백절불굴)"]],
- [1,"Du gir ikke opp selv om en øvelse er vanskelig. Hvilket grunnprinsipp er det?","Iherdighet (In Nae 인내)",["Høflighet (Ye Ui 예의)","Ærlighet (Yom Chi 염치)","Selvkontroll (Guk Gi 극기)"]],
- [1,"Du blir sint, men holder deg rolig. Hvilket grunnprinsipp er det?","Selvkontroll (Guk Gi 극기)",["Høflighet (Ye Ui 예의)","Ærlighet (Yom Chi 염치)","Iherdighet (In Nae 인내)"]],
- [1,"Du reiser deg opp igjen og prøver på nytt, uansett hvor sterk motstanden er. Hvilket grunnprinsipp er det?","Ukuelig ånd (Baekjul Boolgool 백절불굴)",["Høflighet (Ye Ui 예의)","Ærlighet (Yom Chi 염치)","Selvkontroll (Guk Gi 극기)"]],
+ [1,"Du sier «vær så god» og «takk», og hilser pent på instruktøren. Hvilket grunnprinsipp er det?","Høflighet",["Selvkontroll","Iherdighet","Ukuelig ånd"]],
+ [1,"Du gir ikke opp selv om en øvelse er vanskelig. Hvilket grunnprinsipp er det?","Iherdighet",["Høflighet","Ærlighet","Selvkontroll"]],
+ [1,"Du blir sint, men holder deg rolig. Hvilket grunnprinsipp er det?","Selvkontroll",["Høflighet","Ærlighet","Iherdighet"]],
+ [1,"Du reiser deg opp igjen og prøver på nytt, uansett hvor sterk motstanden er. Hvilket grunnprinsipp er det?","Ukuelig ånd",["Høflighet","Ærlighet","Selvkontroll"]],
  [1,"Hvor mange punkter har elevens ed?","5",["3","4","10"]],
  [1,"Hva lover du først i elevens ed?","Å følge reglene i Taekwon-do",["Å bli verdensmester","Å trene hver dag","Å alltid vinne"]],
  [1,"Hvem skal du vise respekt for ifølge elevens ed?","Instruktøren og eldre elever",["Bare de som vinner","Bare de som er eldre enn deg","Ingen spesielle"]],
