@@ -42,7 +42,7 @@ ul.miss{padding-left:22px;line-height:1.6;font-size:1.1rem}
 <main>
  <section id="home">
   <h1>Taekwondo-quiz</h1>
-  <p class="sub">Denne quizen er laget som et hobbyprosjekt og skal bare brukes som tillegg til NTN-kompendiene. <br> Velg beltet ditt. Du får bare spørsmål fra ditt belte og lavere.</p>
+  <p class="sub"> Velg beltet ditt. Du får bare spørsmål fra ditt belte og lavere.</p>
   <div id="belts"></div>
   <label class="opt"><input type="checkbox" id="only"> Bare spørsmål fra mitt eget belte</label>
   <button class="main" id="go">Start quiz</button>
@@ -175,4 +175,7 @@ function finish(){
 $("go").onclick=start;$("again").onclick=start;
 $("quit").onclick=()=>show("home");$("change").onclick=()=>show("home");
 buildHome();
-</script></body></html>
+</script>
+<footer>
+        <p>Denne quizen er laget som et hobbyprosjekt og skal bare brukes som tillegg til NTN-kompendiene som kan kjøpes på <a href="https://ntnshop.no/produktkatalog/kompendier" target="_blank">ntnshop.no</a></p>
+    </footer></body></html>
