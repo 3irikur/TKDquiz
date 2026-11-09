@@ -163,7 +163,7 @@ const FACTS=[
  [3,"Hvilket mønster kommer etter Won-Hyo?","Yul-Gok",["Do-San","Joong-Gun","Toi-Gye"]],
  [3,"Hvor mange mønstre har vi totalt?","24",["32","36","19"]],
  [3,"Hva symboliserer de 24 mønstrene i Taekwon-do?","Døgnets 24 timer og et helt liv",["Antall klubber det var i Korea fra starten","Hvor mange planker man maksimalt kan knuse ved oppvisning","Livet til patrioten Ahn Chang-Ho"]],
- [4,"Hvor ligger hovedkvarteret til ITF?","Wien i Østerrike",["Seoul","Oslo","Tokyo"]],
+ [4,"Hvor ligger hovedkvarteret til ITF?","Wien i Østerrike",["Seoul","Oslo","Tokyo"],1],
  [4,"Hva symboliserer blått belte?","Himmelen – treet vokser mot himmelen",["Jorden","Fare","Uskyld"]],
  [4,"Hvem er mønsteret Joong-Gun oppkalt etter?","Ahn Joong-Gun, en koreansk patriot",["En munk","En admiral","En konge"]],
  [4,"Hvor mange bevegelser har Joong-Gun?","32",["28","37","38"]],
