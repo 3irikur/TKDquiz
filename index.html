@@ -45,7 +45,7 @@ ul.miss{padding-left:22px;line-height:1.6;font-size:1.1rem}
   <p class="sub">Velg beltet ditt. Du får bare spørsmål fra ditt belte og lavere.</p>
   <div id="belts"></div>
   <label class="opt"><input type="checkbox" id="only"> Bare spørsmål fra mitt eget belte</label>
-  <p id="persvern" hidden style="font-size:.95rem;opacity:.8">Svarene dine sendes anonymt til treneren, slik at dere kan øve på det som er vanskelig.</p>
+  <p id="persvern" hidden style="font-size:.95rem;opacity:.8">Statistikk fra svarene lagres anonymt.</p>
   <button class="main" id="go">Start quiz</button>
  </section>
  <section id="quiz" hidden>
@@ -195,7 +195,7 @@ $("go").onclick=start;$("again").onclick=start;
 $("quit").onclick=()=>{sendResultater();show("home")};$("change").onclick=()=>show("home");
 buildHome();$("persvern").hidden=!resultatKlar();
 </script><footer>
-        <p style="text-align: center; font-size: 0.85rem; color: #888888;">Denne quizen er laget som et hobbyprosjekt og skal bare brukes som tillegg til NTN-kompendiene som kan kjøpes på <a href="https://ntnshop.no/produktkatalog/kompendier" target="_blank">ntnshop.no</a></p>
+       
         <p style="text-align: center; font-size: 0.85rem; color: #888888;">Denne quizen er laget som et hobbyprosjekt og skal bare brukes som tillegg til NTN-kompendiene.</a></p>
         <p style="text-align: center; font-size: 0.85rem; color: #888888; margin-top: 5px;">Kontakt: <a href="mailto:eirik.rohne.odegaard@gmail.com">Eirik Røhne Ødegaard</a></p>
     </footer></body></html>
