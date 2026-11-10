@@ -1,4 +1,4 @@
-t<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="nb"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -42,9 +42,10 @@ ul.miss{padding-left:22px;line-height:1.6;font-size:1.1rem}
 <main>
  <section id="home">
   <h1>Taekwondo-quiz</h1>
-  <p class="sub"> Velg beltet ditt. Du får bare spørsmål fra ditt belte og lavere.</p>
+  <p class="sub">Velg beltet ditt. Du får bare spørsmål fra ditt belte og lavere.</p>
   <div id="belts"></div>
   <label class="opt"><input type="checkbox" id="only"> Bare spørsmål fra mitt eget belte</label>
+  <p id="persvern" hidden style="font-size:.95rem;opacity:.8">Svarene dine sendes anonymt til treneren, slik at dere kan øve på det som er vanskelig.</p>
   <button class="main" id="go">Start quiz</button>
  </section>
  <section id="quiz" hidden>
@@ -78,6 +79,14 @@ const FEEDBACK={
  belt:"entry.1408678937",
  note:"entry.1090594936"};
 
+/* Resultater til Google Skjema → regneark (anonymt, ingen navn). Se oppskriften.
+   Rekkefølgen på feltene i skjemaet: Økt, Belte, Modus, Spørsmål, Spørsmålets nivå, Resultat, Svar gitt. */
+const RESULTAT={
+ url:"https://docs.google.com/forms/d/e/1FAIpQLSdPeTlc-ptbDIyUwl1D7T3iqiekR4QOs7xkuH1otaY6e3mobw/formResponse",
+ okt:"entry.913656215",belte:"entry.1228677442",modus:"entry.292531232",
+ sporsmal:"entry.1228731612",nivaa:"entry.616215387",resultat:"entry.654135610",svar:"entry.452136883"};
+const resultatKlar=()=>!/X{4}/.test(JSON.stringify(RESULTAT));
+
 /* ===== Quiz-motor (innholdet ligger i sporsmal.js) ===== */
 if(typeof VOCAB==="undefined"){document.body.innerHTML="<main><h1>Fant ikke sporsmal.js</h1><p>Legg filen sporsmal.js i samme mappe som index.html.</p></main>";throw new Error("sporsmal.js mangler")}
 const POOL=[];
@@ -90,7 +99,7 @@ FACTS.forEach(([l,q,a,w,hid])=>{if(!hid)POOL.push({k:q,l:l,cat:"f",dir:"f",q:q,a
 const $=id=>document.getElementById(id);
 function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){}return null}
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-let belt=Math.min(6,Math.max(1,+ls("belt")||1)),only=ls("only")==="1",round=[],i=0,score=0,missed=[],locked=false;
+let belt=Math.min(6,Math.max(1,+ls("belt")||1)),only=ls("only")==="1",round=[],i=0,score=0,missed=[],locked=false,logg=[],okt="",sendt=false;
 
 function show(id){["home","quiz","result"].forEach(s=>$(s).hidden=s!==id)}
 function paintBelt(){document.documentElement.style.setProperty("--band",BELTS[belt-1].c);
@@ -121,7 +130,7 @@ function start(){
  const used=new Set();round=[];
  for(const p of shuffle(POOL.filter(p=>only?p.l===belt:p.l<=belt))){
   if(used.has(p.k))continue;used.add(p.k);round.push(p);if(round.length===10)break}
- i=0;score=0;missed=[];show("quiz");ask();
+ i=0;score=0;missed=[];logg=[];sendt=false;okt=Math.random().toString(36).slice(2,8)+Date.now().toString(36).slice(-4);show("quiz");ask();
 }
 function ask(){
  const it=round[i];locked=false;
@@ -136,6 +145,7 @@ function ask(){
 function pick(btn,o,it){
  if(locked)return;locked=true;
  const right=o===it.a;
+ logg.push({q:it.q,l:it.l,ok:right,svar:o});
  if(right){score++;btn.classList.add("ok");$("fb").textContent="Riktig!"}
  else{btn.classList.add("bad");missed.push(it);
   [...$("answers").children].forEach(b=>{if(b.textContent===it.a)b.classList.add("ok")});
@@ -162,8 +172,17 @@ $("sendflag").onclick=async()=>{
  s.disabled=false;
 };
 $("next").onclick=()=>{i++;if(i>=round.length)finish();else ask()};
+function sendResultater(){
+ if(sendt||!logg.length||!resultatKlar())return;sendt=true;
+ const modus=only?"Bare eget belte":"Eget belte og lavere";
+ logg.forEach(x=>{const d=new URLSearchParams();
+  d.set(RESULTAT.okt,okt);d.set(RESULTAT.belte,BELTS[belt-1].n);d.set(RESULTAT.modus,modus);
+  d.set(RESULTAT.sporsmal,x.q);d.set(RESULTAT.nivaa,BELTS[x.l-1].n);
+  d.set(RESULTAT.resultat,x.ok?"Riktig":"Feil");d.set(RESULTAT.svar,x.svar);
+  fetch(RESULTAT.url,{method:"POST",mode:"no-cors",body:d}).catch(()=>{})});
+}
 function finish(){
- show("result");
+ sendResultater();show("result");
  const pct=score/round.length;
  $("rtitle").textContent=pct===1?"Perfekt! Kihap!":pct>=.7?"Flott jobbet!":"Bra innsats – øv litt mer!";
  $("rscore").textContent=score+" av "+round.length;
@@ -173,10 +192,6 @@ function finish(){
   missed.forEach(it=>{const li=document.createElement("li");li.textContent=it.q+" → "+it.a;ul.appendChild(li)});m.appendChild(ul)}
 }
 $("go").onclick=start;$("again").onclick=start;
-$("quit").onclick=()=>show("home");$("change").onclick=()=>show("home");
-buildHome();
-</script>
-<footer>
-        <p style="text-align: center; font-size: 0.85rem; color: #888888;">Denne quizen er laget som et hobbyprosjekt og skal bare brukes som tillegg til NTN-kompendiene.</a></p>
-        <p style="text-align: center; font-size: 0.85rem; color: #888888; margin-top: 5px;">Kontakt: <a href="mailto:eirik.rohne.odegaard@gmail.com">Eirik Røhne Ødegaard</a></p>
-    </footer></body></html>
+$("quit").onclick=()=>{sendResultater();show("home")};$("change").onclick=()=>show("home");
+buildHome();$("persvern").hidden=!resultatKlar();
+</script></body></html>
